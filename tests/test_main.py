@@ -6,6 +6,16 @@ import pywt
 from src.main import main
 
 
+@pytest.fixture()
+def fs_with_data(fs):
+    fs.add_real_file("data/sitting.obj")
+    fs.add_real_file("data/sitting.png")
+    fs.add_real_file("data/wood.jpg")
+    fs.add_real_file("data/shader.vert")
+    fs.add_real_file("data/shader.frag")
+    return fs
+
+
 def compute_energy(img):
     _, (cH, cV, cD) = pywt.dwt2(img, 'db1')
     return (cH ** 2 + cV ** 2 + cD ** 2).sum() / img.size[0]
@@ -17,7 +27,7 @@ def test_screen(xvfb):
     assert xvfb.colordepth == 16
 
 
-def test_main(xvfb):
+def test_main(xvfb, fs_with_data):
     main()
 
     # load and convert to gray
