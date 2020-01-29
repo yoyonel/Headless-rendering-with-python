@@ -1,4 +1,3 @@
-import numpy
 from PIL import Image, ImageChops, ImageFilter
 import pytest
 import pywt
